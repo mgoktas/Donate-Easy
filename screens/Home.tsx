@@ -147,7 +147,7 @@ const Home = ({route, navigation}) => {
       }
 
 useEffect(() => {
-  Geocoder.init("AIzaSyDVrPuavJ8xZTi5cYls1KYm9dqkOGR7E9c"); // use a valid API key
+  Geocoder.init("<YOUR-API-KEY>"); // use a valid API key
 },[])
 
 const refMaps = useRef()

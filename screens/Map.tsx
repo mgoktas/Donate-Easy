@@ -34,7 +34,7 @@ const Home = ({route, navigation}) => {
           headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json',
-              'X-CSCAPI-KEY': 'UG9lVktzWEswQ3lTSlJEN0tGODRNMkkxZllnTDVzcW5abTFYSm1MQg=='
+              'X-CSCAPI-KEY': '<YOUR-API-KEY>'
       },
       })
       .then(response => response.json())

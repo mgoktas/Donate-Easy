@@ -1,32 +1,35 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ImageBackground, Text } from 'react-native';
 import MapView, {  PROVIDER_GOOGLE, Geojson } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
-import { donate } from '../components/Functions';
-import { MyDialog, InputBox, Title, SCREEN_HEIGHT, SCREEN_WIDTH } from '../components/Utilities';
+import { addNotification, donate } from '../components/Functions';
+import { MyDialog, InputBox, Title, SCREEN_HEIGHT, SCREEN_WIDTH, BigButton, TabBar } from '../components/Utilities';
 // import Geojson from 'react-native-geojson';
 import Geocoder from 'react-native-geocoding';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Notifications } from 'react-native-notifications';
+import DatePicker from 'react-native-date-picker';
 
 
 const Home = ({route, navigation}) => {
-    const [isVisibleInfo, setIsVisibleInfo] = useState(false)
-    const [isVisible, setIsVisible] = useState(false)
-    const [isLoading, setIsLoading] = useState(true)
-    const [countries, setCountries] = React.useState([])
-    const [filteredDataSource, setFilteredDataSource] = useState([]);
-    const [masterDataSource, setMasterDataSource] = useState([]);
-    const [searchText, setSearchText] = useState('');
-    const [donationAmount, setDonationAmount] = useState('')
-    const [chosenCountry, setChosenCountry] = useState('')
+
+  const [isVisible, setIsVisible] = useState(false)
+  const [isVisibleWrong, setIsVisibleWrong] = useState(false)
+  const [isVisibleWrong2, setIsVisibleWrong2] = useState(false)
+  const [isRegistered, setIsRegistered] = useState(Notifications.isRegisteredForRemoteNotifications())
+  const [where, setWhere] = useState('')
+  
+  const [date, setDate] = useState(new Date())
+  
+  useEffect(() => {
     
+    Notifications.registerRemoteNotifications()
+    
+    const check = async () => {
 
-    useEffect(() => {
-        dataFetch()
-    },[])
-
-    const dataFetch = async () => {
-      await dataFetch1()
+     setIsRegistered(await Notifications.isRegisteredForRemoteNotifications())
     }
 
+<<<<<<< HEAD
     const dataFetch1 = async () => {
 
         await fetch('https://api.countrystatecity.in/v1/countries', {
@@ -92,11 +95,12 @@ const Home = ({route, navigation}) => {
             }
 
           }
+=======
+    check()
+>>>>>>> 88e0436 (update)
     
-          // 👇️ otherwise return the object as is
-          return obj;
-        });
     
+<<<<<<< HEAD
         setFilteredDataSource(newState);
       };
 
@@ -152,31 +156,65 @@ useEffect(() => {
 
 const refMaps = useRef()
 
+=======
+  },[])
+>>>>>>> 88e0436 (update)
 
 
     return (
-        <View style={{height: SCREEN_HEIGHT}}>
-          
-                <MapView
-                provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                style={{
-                    height: SCREEN_HEIGHT,
-                    width: '100%',
-                }}
-                maxZoomLevel={10}
-                region={{
-                    latitude: 37.78825,
-                    longitude: -122.4324,
-                    latitudeDelta: 0.015,
-                    longitudeDelta: 0.0121,
-                }}
-                onPress={async (txt) => {console.log('AAA', txt.nativeEvent.coordinate, getCountry(txt.nativeEvent.coordinate));
-              }}
-                ref={refMaps}
-                >
 
-     </MapView>
-        </View>
+        <ImageBackground source={require('../components/images/moneys.jpg')} style={{ justifyContent: 'space-between', height: SCREEN_HEIGHT, paddingVertical: 150, alignContent: 'center', alignItems: 'center'}}>
+
+          <View style={{position: 'absolute', top:0, width: SCREEN_WIDTH}}>
+            <TabBar txt={'Donate Easy'} />
+          </View>
+
+          <MyDialog
+
+            isVisible={isVisible} 
+            txt2={'Where would you like to donate?'} 
+            onChangeText={txt => setWhere(txt)}
+            txt3={'Your donations are secure with us.'} 
+            handleYes={async () => { setIsVisible(false); setTimeout(()=>{setIsVisibleWrong(true)}, 400) }} 
+            handleNo={() => {setIsVisible(false);}}
+             />
+
+
+<DatePicker
+              modal={true}
+                    mode='date'
+                    open={isVisibleWrong}
+                    date={date}
+                    onConfirm={(date) => {
+                      setDate(date)
+                      setIsVisibleWrong(false)
+                      setIsVisibleWrong2(true)
+                      addNotification(date, where)
+                    }}  
+                    onCancel={() => {
+                      setIsVisibleWrong(false)
+                    }}
+                />
+
+
+          <MyDialog
+
+          type={3}
+          txt2={'Notification created'}
+          isVisible={isVisibleWrong2} 
+          handleYes={async () => { setIsVisibleWrong2(false); }}
+          />
+
+          <BigButton onPress={() => {navigation.navigate('DonateNoCountry')}} text={'Donate Now'}/>
+        
+          <BigButton onPress={() => {navigation.navigate('Map')}} text={'Explore The Map'}/>
+
+          <BigButton onPress={() => {navigation.navigate('DonationBenefits')}} text={'Why You Should Donate?'}/>
+    
+          <BigButton type={3} display={ isRegistered ? 'flex' : 'none' } onPress={() => {setIsVisible(true)}} text={'Donate Later'}/>
+    
+        </ImageBackground>
+
     )
 }
 

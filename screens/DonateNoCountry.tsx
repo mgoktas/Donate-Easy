@@ -54,7 +54,7 @@ const dataFetch = async () => {
 //       headers: {
 //           Accept: 'application/json',
 //           'Content-Type': 'application/json',
-//           'X-Api-Key': '49QJHF+fiie+VacLzMC++A==mrPKmtd3ri0VT7A2'
+//           'X-Api-Key': '<YOUR-API-KEY>'
 //   },
 //   })
 //   .then(response => response.json())

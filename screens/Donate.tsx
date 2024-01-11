@@ -56,7 +56,7 @@ const dataFetch2 = async () => {
       headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          'X-Api-Key': '<YOUR-API-KEY>'
+          'X-Api-Key': '49QJHF+fiie+VacLzMC++A==mrPKmtd3ri0VT7A2'
   },
   })
   .then(response => response.json())
@@ -100,7 +100,7 @@ const dataFetch2 = async () => {
             after={true}
              isVisible={isVisibleWrong} txt1={'We do not currently support donations directly at countries.'} txt2={'Buy you can still donate to WFP(World Food Programme).'} txt3={'Would you like to proceed?'} onChangeText={(txt) => {setDonationAmount(txt)}} handleYes={async () => { setIsVisibleWrong(false); await donate(donationAmount, chosenCountry, handlePress);}} handleNo={() => {setIsVisibleWrong(false); ; navigation.navigate('Home')}}
              />
-screens components
+
              <MyDialog 
              before={true}
              iso={country.iso2}

@@ -28,9 +28,8 @@ const onViewableItemsChanged = useCallback(({ viewableItems }) => {
 }, []);
 
 
-const configref = useRef(viewabilityConfig)
-const itemschangedref = useRef(onViewableItemsChanged)
-
+    const configref = useRef(viewabilityConfig)
+    const itemschangedref = useRef(onViewableItemsChanged)
 
     const currentFlatlistIndex = useRef(null)
     const flatlistRef = useRef(null)
@@ -66,15 +65,15 @@ const itemschangedref = useRef(onViewableItemsChanged)
         </FlatList>
         {/* <FocusSlide mode={'monk mode'} minute={mins} seconds = {secs} /> */}
         <FocusButtonPause selectedIndex={selectedIndex} onPress1={() => {
-            
-            console.log(selectedIndex)
-            setSelectedIndex(selectedIndex + 1);
-            flatlistRef.current.scrollToIndex({ index: selectedIndex, animated: true });  setImageSource(datas[selectedIndex].image);
-            if(selectedIndex == 5){
-                navigation.navigate('DonateNoCountry')
-        }
-            
-            }}/>
+
+                console.log(selectedIndex);
+                setSelectedIndex(selectedIndex + 1);
+                flatlistRef.current.scrollToIndex({ index: selectedIndex, animated: true }); setImageSource(datas[selectedIndex].image);
+                if (selectedIndex == 5) {
+                    navigation.navigate('DonateNoCountry');
+                }
+
+            } } isAction={undefined} isAction2={undefined} onPress2={undefined}/>
         </ImageBackground>
 
     )
